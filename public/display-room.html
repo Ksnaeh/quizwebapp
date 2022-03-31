@@ -24,11 +24,11 @@
 
 </head>
 
-<body>
+<body onload="getSessionID()">
 <!-- <body onload='editQuestions()'> -->
 	<div class="parallax">
 	        <!-- This is the container that holds the initial message, heading, and movies -->
-	<div id="heado" w3-include-html="top-navigation-signed-in.html"></div>
+	<div id="heado" w3-include-html="top-navigation.html"></div>
 		<!-- <div class="secondsidebar">
 				<h6 style="font-weight: bold; margin-bottom: 20px; margin-top: 20px; margin-left: 15px">Sort By:</h6>
 				<a id="FirstPerson1" onClick="listFirstPerson()"  href="#">First Person</a>
@@ -37,6 +37,8 @@
 				  <a id="BattleRoyale1" onClick="listBattleRoyale()" href="#">Battle Royale</a>
 				</div> -->
 <div class="container">
+
+            
                 <!-- This is the heading showing how many movies are there -->
                 <h3 id="summary" style="margin-left: 200px; margin-top: 50px; margin-bottom: 30px; color: black; font-family: Verdana, Geneva, Tahoma, sans-serif;">Set up questions, answer on the phone!</h3>
             
@@ -46,72 +48,7 @@
             </div> -->
             <div style="margin: 0 auto; width: 100%;">
               <div class="col-md-auto" style="margin-top: 100px; margin-left: 100px;">
-                <form id="signupForm" action="javascript:createQuestionsGoNext()">
-                  <h2 style="text-align: center; font-weight: bold;">Question no.</h2>
-                  <div class="row">
-                    <div class="col">
-                <table style="margin: 0 auto;">
-                  
-                  <tr>
-                  <td>
-                  <label>Question: </label>
-                  <br>
-                    <input type="text" id="addquestion" name="addUsername" autocomplete="off" required/>
-                    <br>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label>Option A: </label>
-                      <br>
-                      <input type="text" id="adda" name="addPassword" autocomplete="off" required/>
-                      <br>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label>Option B: </label>
-                      <br>
-                      <input type="text" id="addb" name="addEmail" autocomplete="off" required/>
-                      <br>
-                    </td>
-                  </tr>
-                  </table>
-                  </div>
-                  <div class="col">
-                  <table style="margin: 0 auto;">
-                  
-                    
-                    <tr>
-                    <td>	
-                    <label>Option C: </label>
-                    <br>
-                      <input type="text" id="addc" name="cfmPassword" autocomplete="off" required/>
-                      <br>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Option D: </label>
-                        <br>
-                        <input type="text" id="addd" name="cfmEmail" autocomplete="off" required/>
-                        <br>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Correct Answer: </label>
-                        <br>
-                        <input type="text" id="addanswer" name="cfmEmail" autocomplete="off" required/>
-                        <br>
-                      </td>
-                    </tr>
-                    </table>
-                    </div>
-                  </div>
-                    <input type="submit" value="Start Session">
-                    <input type="button" onClick="createQuestions()" value="Next Question">
-                </form>
+                <p id="sessionid"></p>
               </div>
             </div>
 

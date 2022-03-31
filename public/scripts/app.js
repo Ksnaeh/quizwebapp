@@ -77,10 +77,21 @@ function logIn(){
     console.log(users);
 
     for (var x = 0; x < users.length; x++){
-        if (users[x].username == username && users[x].password == password){
+        if (users[x].username == username && users[x].password == password && users[x].role == "teacher"){
             console.log(users[x].username); 
 
-            //TODO: redirect users to signed in page with auth token
+            //todo: sessionstorage the username
+        
+            window.location = "dashboard.html";
+
+            return;
+        }
+        else if (users[x].username == username && users[x].password == password && users[x].role == "student"){
+            console.log(users[x].username); 
+
+            //todo: sessionstorage the username
+        
+            alert("Dear Student, please login thru the app instead. Thank you!")
 
             return;
         }
@@ -103,12 +114,18 @@ function signUp(){
         password: newpass,
         email: newemail,
         id: userId,
-        role: "student" 
+        role: "teacher" 
     })
     .then(function(docRef) {
         console.log("signed up!");
 
-        //todo: login user and redirect page
+        
+        alert("User has been added!");
+
+
+        //todo: sessionstorage the username
+
+        window.location = "dashboard.html";
 
     })
     .catch(function(error) {
@@ -129,6 +146,8 @@ function getResponses(){
 function getSessionByUsername(){
     console.log("starting session");
     //console.log(sessions);
+
+    var sessionid = localStorage.getItem("sessionID");
 
     //TODO: load page when complete
 
@@ -151,8 +170,7 @@ function getSessionByUsername(){
                // console.log(x);
                 //TODO: change this to sessionStorage variable;
         
-                if (sessions[x].username == uname){
-                    console.log(sessions[x].topic);
+                if (sessions[x].username == uname && sessionid == sessions[x].sessionid){
         
                     getQuestionsBySession(sessions[x].sessionid);
                     getResponsesBySession(sessions[x].sessionid);
@@ -209,9 +227,12 @@ function getResponsesBySession(id){
 function createSession(){
 
     var myId = db.collection("sessions").doc().id;
+
+    myId = myId.substring(0, 7);
     
-    var topic = document.getElementById("addTopic").value;
-    var uname = document.getElementById("addUsername").value;
+    // var topic = document.getElementById("addTopic").value;
+    // var uname = document.getElementById("addUsername").value;
+
     // var answer = document.getElementById("addanswer").value;
     // var newa = document.getElementById("adda").value;
     // var newb = document.getElementById("addb").value;
@@ -219,16 +240,20 @@ function createSession(){
     // var newd = document.getElementById("addd").value;
 
     db.collection("sessions").doc(myId).set({
-        sessionid: sessionid,
-        topic: topic,
-        username: uname,
+        // sessionid: myId,
+        // topic: topic,
+        // username: uname,
+        sessionid: myId,
+        username: "profchua",
     })
     .then(function(docRef) {
         console.log("Session created!");
 
         //add sessionid to localstorage
+        localStorage.setItem("sessionID", sessionid);
 
-        //todo: redirect user back to control page
+        //todo: bring user to create questions
+        window.location.href = "set-question-answers.html";
 
     })
     .catch(function(error) {
@@ -240,11 +265,11 @@ function createSession(){
 //TESTED WORKING
 function createQuestions(){
     
-    var sessionid; //get session id from sessionstorage
+    var sessionid = localStorage.getItem("sessionID"); //get session id from sessionstorage
 
     var myId = db.collection("questions").doc().id;
     
-    var questionNo = document.getElementById("addquestionNo").value;
+    var questionNo = 1;
     var question = document.getElementById("addquestion").value;
     var answer = document.getElementById("addanswer").value;
     var newa = document.getElementById("adda").value;
@@ -255,7 +280,7 @@ function createQuestions(){
     db.collection("questions").doc(myId).set({
         question: question,
         sessionid: sessionid,
-        questionno: questionNo,
+        questionno: questionNo.toString(),
         questionid: myId,
         answer: answer,
         a: newa,
@@ -267,12 +292,72 @@ function createQuestions(){
         console.log("Question inserted!");
 
         //todo: redirect user back to control page
+        // questionNo++;
+        location.reload()
 
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
     });
 }
+
+function createQuestionsGoNext(){
+    
+    var sessionid = localStorage.getItem("sessionID"); //get session id from sessionstorage
+
+    var myId = db.collection("questions").doc().id;
+    
+    var questionNo = 1;
+    var question = document.getElementById("addquestion").value;
+    var answer = document.getElementById("addanswer").value;
+    var newa = document.getElementById("adda").value;
+    var newb = document.getElementById("addb").value;
+    var newc = document.getElementById("addc").value;
+    var newd = document.getElementById("addd").value;
+
+    db.collection("questions").doc(myId).set({
+        question: question,
+        sessionid: sessionid,
+        questionno: questionNo.toString(),
+        questionid: myId,
+        answer: answer,
+        a: newa,
+        b: newb,
+        c: newc,
+        d: newd,
+    })
+    .then(function(docRef) {
+        console.log("Question inserted!");
+
+        console.log(sessionid);
+
+        //todo: redirect user back to control page
+        var nextpage = confirm("Proceed to start quiz?");
+        if (nextpage == true){
+            localStorage.setItem("sessionIDTemp", sessionid);
+
+            window.location.href = "display-room.html";
+        
+        }
+        else{
+            location.reload();
+        }
+
+    })
+    .catch(function(error) {
+        console.error("Error adding document: ", error);
+    });
+}
+
+function getSessionID(){
+
+    var sessionid = localStorage.getItem("sessionIDTemp");
+
+    var el_down = document.getElementById("sessionid");
+    el_down.innerHTML = "Session ID = " + sessionid;
+}
+
+
 
 
 
