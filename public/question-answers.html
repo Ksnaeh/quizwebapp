@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Quiz Web App</title>
+<link rel="stylesheet" href="css/mystyle.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
+	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	
+<script type="text/javascript" src="scripts/app.js"></script>
+<!-- <script src="js/auth.js"></script>
+<script src="js/images.js"></script>
+<script src="js/comments-viewonly.js"></script>
+<script src="js/app.js"></script>
+<script src="js/movies.js"></script> -->
+
+</head>
+
+<body onload="getSessionByUsername()">
+<!-- <body onload='editQuestions()'> -->
+	<div class="parallax">
+	        <!-- This is the container that holds the initial message, heading, and movies -->
+	<div id="heado" w3-include-html="top-navigation.html"></div>
+		<!-- <div class="secondsidebar">
+				<h6 style="font-weight: bold; margin-bottom: 20px; margin-top: 20px; margin-left: 15px">Sort By:</h6>
+				<a id="FirstPerson1" onClick="listFirstPerson()"  href="#">First Person</a>
+				  <a id="ThirdPerson1" onClick="listThirdPerson()" href="#">Third Person</a>
+				  <a id="MOBA1" onClick="listMOBA()" href="#">MOBA</a>
+				  <a id="BattleRoyale1" onClick="listBattleRoyale()" href="#">Battle Royale</a>
+				</div> -->
+<div class="container">
+
+            
+                <!-- This is the heading showing how many movies are there -->
+                <h3 id="summary" style="margin-left: 200px; margin-top: 50px; margin-bottom: 30px; color: black; font-family: Verdana, Geneva, Tahoma, sans-serif;">Set up questions, answer on the phone!</h3>
+            
+            <!-- Displays thumbnails of the movies here -->
+            <!-- <div id="moviesTable" class="row">
+
+            </div> -->
+            <div style="margin: 0 auto; width: 100%;">
+              <div class="row">
+                <div class="col">
+                  <img src="testdesigns/Image_1.png" width="450px" height="450px">
+                </div>
+                <div class="col" style="margin-top: 250px; text-align: center;">
+                  <h3>Set Questions</h3>
+                  <h3>(As a teacher)</h3>
+                  <a href="auth.html" item="6" onclick="fetchImages(this)"><h3>Register / Login now >></h3></a>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin: 0 auto; margin-top: 100px; width: 100%;">
+              <div class="row">
+                <div class="col" style="margin-top: 250px; text-align: center;">
+                  <h3>Answer Questions</h3>
+                  <h3>(As a student, on the app)</h3>
+                  <!-- <a href="auth" item="7" onclick="fetchImages(this)"><h3>More Info >></h3></a> -->
+                </div>
+                <div class="col">
+                  <img src="testdesigns/Mask_Group_3.png" width="450px" height="450px">
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div style="margin: 0 auto; margin-top: 100px; width: 120%;">
+              <div class="row">
+                <div class="col-md-auto">
+                    <div style="width: 630px; height: 250px; text-align: center; outline: 5px solid rgba(112,97,76,1); background-image: url('testdesigns/pls_bh.png'); background-size: 400px 300px; background-repeat: no-repeat; background-position: right top;">
+                      <h3 style="padding-top: 100px;">- Loved by You -</h3>
+                    </div>
+                </div>
+                <div class="col-1">
+                  
+                </div>
+                <div class="col-sm-auto">
+                  <a href="#" item="8" onclick="fetchImages(this)"><img src="testdesigns/Image_3.png" width="250px" height="250px"></a>
+                </div>
+              </div>
+            </div>
+
+
+            <div style="margin: 0 auto; margin-top: 100px; width: 120%;">
+              <div class="row">
+                <div class="col-sm-auto">
+                  <a href="#" item="6" onclick="fetchImages(this)"><img src="testdesigns/Mask_Group_4.png" width="250px" height="250px"></a>
+                </div>
+                <div class="col-1">
+                  
+                </div>
+                <div class="col-sm-auto">
+                  <a href="#" item="4" onclick="fetchImages(this)"><img src="testdesigns/Mask_Group_5.png" width="250px" height="250px"></a>
+                </div>
+                <div class="col-1">
+                  
+                </div>
+                <div class="col-sm-auto">
+                  <a href="#" item="9" onclick="fetchImages(this)"></a><img src="testdesigns/Image_4.png" width="250px" height="250px"></a>
+                </div>
+              </div>
+            </div> -->
+ </div>
+	
+        <div w3-include-html="comments-modal-view.html"></div>
+        
+        <div w3-include-html="movie-modal.html"></div>
+	<div w3-include-html="message-modal.html"></div>
+	<div w3-include-html="criticreview-modal-view.html"></div>
+	
+<br><br>
+	</div>
+</body>
+<!-- <footer>
+	<div w3-include-html="footer.html"></div>
+</footer> -->
+<script src="scripts/w3.js"></script>
+<script>
+        //to bring in other HTML on the fly into this page
+        w3.includeHTML();
+</script>
+
+</html>

@@ -1,0 +1,302 @@
+@charset "utf-8";
+/* CSS Document */
+
+.parallax {
+  /* The image used */
+  background-image: url("../images/backgroundimg.png");
+	background-color: #fff;
+  /* Set a specific height */
+  min-height: 900px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mystyle{
+	/*height: 90px;*/
+	/*width: 254px;*/
+	color: #70614C;
+	font-size: smaller;
+}
+body{
+	/* background-image: url("../images/backgroundimg.jpg"); */
+	background-size:cover;
+	background-repeat: no-repeat;
+	font-family:Verdana;
+	color: #70614C;
+	animation: fadein 3.5s;
+}
+.nofade{
+	animation: fadein 0s;
+}
+
+/*sidebar css*/
+.sidebar {
+  margin: 0;
+	margin-top:30px;
+	margin-left: 15px;
+	border-radius: 5px;
+  padding: 0;
+  width: 250px;
+  background-color:#00462E;
+  position:absolute;
+  font-family: Verdana;
+	font-size: 16px;
+color: white;
+  overflow: auto;
+}
+.secondsidebar{
+	margin: 0;
+	margin-top:455px;
+	margin-left: 15px;
+	border-radius: 5px;
+  padding: 0;
+  width: 250px;
+  background-color:#0E0E0E;
+  position:absolute;
+  font-family: Verdana;
+	font-size: 16px;
+color: white;
+  overflow: auto;}
+
+.sidebar1{
+	
+  margin: 0;
+	margin-top:20px;
+	margin-left: 15px;
+	border-radius: 5px;
+  padding: 0;
+  width: 250px;
+  background-color:#282828;
+  position:absolute;
+  font-family: Verdana;
+	font-size: 16px;
+color: white;
+  overflow: auto;
+}
+.secondsidebar2{
+	margin: 0;
+	margin-top:455px;
+	margin-left: 15px;
+	border-radius: 5px;
+  padding: 0;
+  width: 250px;
+  background-color:#0E0E0E;
+  position:absolute;
+  font-family: Verdana;
+	font-size: 16px;
+color: white;
+  overflow: auto;}
+.sidebar a, .sidebar1 a, .secondsidebar a, .secondsidebar2 a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active), .sidebar1 a:hover:not(.active), 
+.secondsidebar a:hover:not(.active), .secondsidebar2 a:hover:not(.active) {
+  background-color: #002C1D;
+  color: white;
+}
+/*end of sidebar css*/
+#Rectangle_13 {
+    fill: transparent;
+    stroke: rgba(112,97,76,1);
+    stroke-width: 5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+.container{
+	height: auto;
+	border-radius: 5px;
+	width: 500%;
+	color: #70614C;
+}
+.fugl{
+	font-family:Verdana;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: left;
+	color: #FFFFFF;
+}
+
+/*profile page*/
+.bird{
+	
+	font-family:Verdana;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+
+}
+.profilenames{
+	width: 170px;
+    
+}
+.container1{
+	height: auto;
+	border-radius: 5px;
+	width: 700px;
+	margin: auto;
+	margin-bottom: 10px;
+	text-align: left;
+	color: #FFFFFF;
+}
+.siao1{
+	height: auto;
+	border-radius: 5px;
+	width: 700px;
+	margin: auto;
+	margin-bottom: 10px;
+	text-align: left;
+	background-color: rgba(0,0,0,.5);
+	
+}
+/*end of profile page*/
+
+
+footer{
+    background: #aaa;
+	font-family: Verdana;
+	font-size: 16px;
+    color: white;
+}
+.edit{
+    float: right;
+    padding-right: 10px;
+}
+
+/*Game container*/
+.siao{
+	height: auto;
+	border-radius: 5px;
+	width: 600px;
+	margin: auto;
+	margin-left: 220px;
+	margin-bottom: 10px;
+	text-align: left;
+	background-color: rgba(0,0,0,.5);
+	
+}
+.loco{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.picture{
+	height: 250px;
+	width: 150px;
+	text-align: left;
+}
+/*End of game container*/
+
+.behind{
+	text-align: left;
+}
+#summary{
+	font-family: Verdana;
+	font-weight: bold;
+}
+
+tr, td{
+	font-family: Verdana;
+	font-size: 16px;
+}
+
+
+.login{
+	display: block;
+	margin: 10%;
+	margin-left: 33%;
+	padding:40px 40px 30px;
+	position:absolute;
+	background-color:#f8f8f8;
+	background-image:-webkit-linear-gradient(top, #f0f0f0, #ddd);
+  background-image:-moz-linear-gradient(top, #f0f0f0, #ddd);
+  background-image:linear-gradient(top, #f0f0f0, #ddd);
+	border-radius:5px;
+	border:#fff 1px solid;
+	box-shadow: rgba(0,0,0,0.5) 0px 3px 20px;
+	text-align: center;
+}
+.text-right{
+	width: 30%;
+}
+/*.chicken, tr, td{
+	border-style: solid;
+}*/
+/*Game modal*/
+.cock{	
+	font-family:Verdana;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000000;
+    width: 150px;
+    text-align: right;
+}
+.cock1{	
+	font-family:Verdana;
+	font-size: 16px;
+	text-align: right;
+	color: #000000;
+    width: 150px;
+}
+
+/*first game modal table*/
+.hedmark{
+    font-family:Verdana;
+	font-size: 26px;
+	font-weight: bold;
+	text-align: left;
+	color: #000000;
+    margin-bottom: 20px;
+}
+.firstie, #genre, #moviePoster{
+    font-size: 14px;
+    color:#444444;
+}
+
+.firstie1{
+    font-size: 12px;
+    color:#444444;
+}
+.akerhus1{
+    font-family:Verdana;
+	font-size: 14px;
+	text-align: left;
+    width: 50%;
+
+}
+.akerhus{
+    font-family:Verdana;
+	font-size: 16px;
+	text-align: left;
+    width: 130px;
+
+}
+.akerhus2{
+    font-family:Verdana;
+    font-size: 14px;
+	text-align: left;
+    width: 35%;
+
+}
+
+@media all and (max-width: 800px) {
+    .sidebar, .sidebar1, .secondsidebar, .secondsidebar2{
+        width: 30%;
+    }
+    .login{
+        width: 45%;
+    }
+    .flex, .signupForm{
+        width:20%;
+    }
+}
