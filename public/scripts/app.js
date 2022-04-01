@@ -81,15 +81,13 @@ function logIn(){
             console.log(users[x].username); 
 
             //todo: sessionstorage the username
-        
+            localStorage.setItem("userName", username);
             window.location = "dashboard.html";
 
             return;
         }
         else if (users[x].username == username && users[x].password == password && users[x].role == "student"){
             console.log(users[x].username); 
-
-            //todo: sessionstorage the username
         
             alert("Dear Student, please login thru the app instead. Thank you!")
 
@@ -124,6 +122,7 @@ function signUp(){
 
 
         //todo: sessionstorage the username
+        localStorage.setItem("userName", newuser);
 
         window.location = "dashboard.html";
 
@@ -134,6 +133,7 @@ function signUp(){
 }
 
 
+//TODO: DISPLAYING QUESTION AND ANSWER, AS WELL AS LEADERBOARD
 //view responses (insert responses to be done on mobile app side)
 function getResponses(){
     for (var x = 0; x < responses.length; x++){
@@ -223,15 +223,16 @@ function getResponsesBySession(id){
 // }
 
 
-//YET TO TEST: add session
+
+//CREATE SESSION, QUESTIONS AND DISPLAYING SESSION ID BEFORE QUIZ STARTS
+//add session to db and go to set-question-answers.html
 function createSession(){
 
     var myId = db.collection("sessions").doc().id;
 
     myId = myId.substring(0, 7);
     
-    // var topic = document.getElementById("addTopic").value;
-    // var uname = document.getElementById("addUsername").value;
+    var uname = localStorage.getItem("userName");
 
     // var answer = document.getElementById("addanswer").value;
     // var newa = document.getElementById("adda").value;
@@ -240,11 +241,8 @@ function createSession(){
     // var newd = document.getElementById("addd").value;
 
     db.collection("sessions").doc(myId).set({
-        // sessionid: myId,
-        // topic: topic,
-        // username: uname,
         sessionid: myId,
-        username: "profchua",
+        username: uname,
     })
     .then(function(docRef) {
         console.log("Session created!");
@@ -261,8 +259,7 @@ function createSession(){
     });
 }
 
-
-//TESTED WORKING
+//used in set-question-answers.html for setting questions
 function createQuestions(){
     
     var sessionid = localStorage.getItem("sessionID"); //get session id from sessionstorage
@@ -301,6 +298,7 @@ function createQuestions(){
     });
 }
 
+//once user has created enough questions and clicked "finish", trigger this
 function createQuestionsGoNext(){
     
     var sessionid = localStorage.getItem("sessionID"); //get session id from sessionstorage
@@ -349,6 +347,7 @@ function createQuestionsGoNext(){
     });
 }
 
+//displaying session id on the display-room page (before quiz starts)
 function getSessionID(){
 
     var sessionid = localStorage.getItem("sessionIDTemp");
@@ -361,6 +360,7 @@ function getSessionID(){
 
 
 
+//ADDITIONAL FUNCTIONS, MAY IMPLEMENT
 //TESTED WORKING
 function editQuestions(questionid){
 
@@ -395,9 +395,6 @@ function editQuestions(questionid){
         console.error("Error adding document: ", error);
     });
 }
-
-
-
 //TESTED WORKING
 function removeQuestion(){
 
@@ -415,7 +412,10 @@ function removeQuestion(){
 }
 
 
-//TESTED WORKING
+
+
+
+//END SESSION (BUTTON TO BE FOUND IN LEADERBOARD)
 function endSession(id){
 
     var sessionid = id; //to get sessionid when user clicks 'end session'
@@ -463,4 +463,5 @@ function deleteResponses(sessionid){
     })
 
     //TODO: refresh page / bring user back to home page
+    window.location.href = "dashboard.html"
 }
