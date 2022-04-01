@@ -24,7 +24,7 @@
 
 </head>
 
-<body onload="getSessionByUsername()">
+<body onload="displayQuestions()">
 <!-- <body onload='editQuestions()'> -->
 	<div class="parallax">
 	        <!-- This is the container that holds the initial message, heading, and movies -->
@@ -47,28 +47,13 @@
 
             </div> -->
             <div style="margin: 0 auto; width: 100%;">
-              <div class="row">
-                <div class="col">
-                  <img src="testdesigns/Image_1.png" width="450px" height="450px">
-                </div>
-                <div class="col" style="margin-top: 250px; text-align: center;">
-                  <h3>Set Questions</h3>
-                  <h3>(As a teacher)</h3>
-                  <a href="auth.html" item="6" onclick="fetchImages(this)"><h3>Register / Login now >></h3></a>
-                </div>
-              </div>
-            </div>
-
-            <div style="margin: 0 auto; margin-top: 100px; width: 100%;">
-              <div class="row">
-                <div class="col" style="margin-top: 250px; text-align: center;">
-                  <h3>Answer Questions</h3>
-                  <h3>(As a student, on the app)</h3>
-                  <!-- <a href="auth" item="7" onclick="fetchImages(this)"><h3>More Info >></h3></a> -->
-                </div>
-                <div class="col">
-                  <img src="testdesigns/Mask_Group_3.png" width="450px" height="450px">
-                </div>
+              <div class="col-md-auto" style="margin-top: 100px; margin-left: 100px;">
+                <h3 id="question"></h3>
+                <p id="choiceA">Option A: </p>
+                <p id="choiceB">Option B: </p>
+                <p id="choiceC">Option C: </p>
+                <p id="choiceD">Option D: </p>
+                <p id="correctans">correct ans: </p>
               </div>
             </div>
 

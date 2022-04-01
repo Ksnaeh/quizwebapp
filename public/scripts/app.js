@@ -358,6 +358,69 @@ function getSessionID(){
 
 
 
+var count = 0;
+//display questions
+function displayQuestions(){
+
+    var dispqns = [];
+
+    //var session_id = localStorage.getItem("sessionIDTemp");
+    var session_id = "EoV11mmUgFR9VpXBHxwH";
+
+    db.collection("questions")
+    .where("sessionid", "==", session_id)
+    .get()
+    .then(snapshot => {
+        //let changes = snapshot.docChanges();
+        //console.log(snapshot.data())
+        const documents = snapshot.docs //array of documents
+        documents.forEach((doc) => {
+            const docData = doc.data() //Data of that single document
+            console.log("question call success!")
+            dispqns.push(docData);
+           
+        })
+        
+        console.log(dispqns);
+
+        //todo: set interval and increment 'count'
+
+        var question = document.getElementById("question");
+        var choiceA = document.getElementById("choiceA");
+        var choiceB = document.getElementById("choiceB");
+        var choiceC = document.getElementById("choiceC");
+        var choiceD = document.getElementById("choiceD");
+
+        question.innerHTML = "Question: " + dispqns[count].question;
+        choiceA.innerHTML = "Option A: " + dispqns[count].a;
+        choiceB.innerHTML = "Option B: " + dispqns[count].b;
+        choiceC.innerHTML = "Option C: " + dispqns[count].c;
+        choiceD.innerHTML = "Option D: " + dispqns[count].d;
+
+        timeout = setTimeout(alertFunc, 10000);
+
+        function alertFunc() {
+            var correctans = dispqns[count].answer;
+            count++;
+
+            console.log(correctans);
+            if (count < dispqns.length){
+                
+                //todo: display answers for 15 secs here, currently is set to display next qn for debugging
+                displayQuestions();
+            }
+            else{
+                var question = document.getElementById("question");
+                question.innerHTML = "End of Quiz!";
+                return;
+            }
+
+          }
+
+    });
+}
+
+
 
 
 //ADDITIONAL FUNCTIONS, MAY IMPLEMENT
