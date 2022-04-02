@@ -82,7 +82,7 @@ function logIn(){
 
             //todo: sessionstorage the username
             localStorage.setItem("userName", username);
-            window.location = "dashboard.html";
+            window.location = "index.html";
 
             return;
         }
@@ -97,6 +97,11 @@ function logIn(){
             return alert("wrong username / password!");
         }
     }
+}
+
+function logOut(){
+    localStorage.removeItem("userName"); //logout user
+    window.location.href = "index.html";
 }
 
 function signUp(){
@@ -126,7 +131,7 @@ function signUp(){
         //todo: sessionstorage the username
         localStorage.setItem("userName", newuser);
 
-        window.location = "dashboard.html";
+        window.location = "index.html";
 
     })
     .catch(function(error) {
@@ -452,6 +457,11 @@ function displayQuestions(){
 
     var session_id = localStorage.getItem("sessionIDTemp");
     //var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
+    var dispanswer = document.getElementById("disans");
+    dispanswer.style.display = "none";
+
+    var dispend = document.getElementById("disend");
+    dispend.style.display = "none";
 
     db.collection("questions")
     .where("sessionid", "==", session_id)
@@ -467,6 +477,9 @@ function displayQuestions(){
         })
         
         console.log(dispqns);
+
+        var dispqestion = document.getElementById("disqn");
+        dispqestion.style.display = "block";
 
         var question = document.getElementById("question");
         var choiceA = document.getElementById("choiceA");
@@ -487,27 +500,38 @@ function displayQuestions(){
             var correctans = dispqns[count].answer;
             count++;
 
-            
+            var dispqestion = document.getElementById("disqn");
+            dispqestion.style.display = "none";
+            var dispanswer = document.getElementById("disans");
+            dispanswer.style.display = "block";
+        
             if (count < dispqns.length){
                 
+
                 //display answers for 15 secs before moving on to next qn
                 timeout = setTimeout(recallFunc, 15000);
 
                 var ansfield = document.getElementById("correctans");
-                ansfield.innerHTML = "Correct Answer: " + correctans;
+                ansfield.innerHTML = correctans;
                 
                 function recallFunc(){
                     displayQuestions();
                 }
             }
             else{ //once quiz has ended
-                var question = document.getElementById("question");
-                question.innerHTML = "End of Quiz!";
 
                 var ansfield = document.getElementById("correctans");
-                ansfield.innerHTML = "Correct Answer: " + correctans;
+                ansfield.innerHTML = correctans;
 
-                //todo: redirect page to leaderboards.html aft countdown ends
+                var dispend = document.getElementById("disend");
+                dispend.style.display = "block";
+                
+                timeout = setTimeout(recallFunc, 15000);
+
+                function recallFunc(){
+                    window.location.href="leaderboard.html";
+                }
+
 
                 return;
             }
@@ -528,8 +552,8 @@ function displayLeaderboard(){
 
     var pointcount;
     
-    //var session_id = localStorage.getItem("sessionIDTemp");
-    var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
+    var session_id = localStorage.getItem("sessionIDTemp");
+    //var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
 
     var leaderboard = document.getElementById("results");
     leaderboard.innerHTML = "";
@@ -650,9 +674,9 @@ function removeQuestion(){
 
 
 //END SESSION (BUTTON TO BE FOUND IN LEADERBOARD)
-function endSession(id){
+function endSession(){
 
-    var sessionid = id; //to get sessionid when user clicks 'end session'
+    var sessionid = localStorage.getItem("sessionIDTemp"); //to get sessionid when user clicks 'end session'
     db.collection("sessions").doc(sessionid).delete().then(() => {
         console.log("Document successfully deleted!");
 
@@ -696,6 +720,8 @@ function deleteResponses(sessionid){
         return batch.commit();
     })
 
-    //TODO: refresh page / bring user back to home page
-    window.location.href = "dashboard.html"
+    
+    localStorage.removeItem("sessionIDTemp"); //remove the locally stored session id once and for all
+    localStorage.removeItem("userName"); //logout user
+    window.location.href = "index.html";
 }
