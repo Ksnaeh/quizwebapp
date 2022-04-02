@@ -1,6 +1,21 @@
 <!doctype html>
 <html>
 <head>
+
+<style type="text/css">
+  body{
+      /* The image used */
+      background-image: url("css/setqnbakgrunn.png");
+      background-color: #fff;
+      /* Set a specific height */
+
+      /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size:1750px 850px;
+  }
+</style>
 <meta charset="utf-8">
 <title>Quiz Web App</title>
 <link rel="stylesheet" href="css/mystyle.css">
@@ -24,11 +39,9 @@
 
 </head>
 
-<body>
+<body onload="questNo()">
 <!-- <body onload='editQuestions()'> -->
-	<div class="parallax">
 	        <!-- This is the container that holds the initial message, heading, and movies -->
-	<div id="heado" w3-include-html="top-navigation-signed-in.html"></div>
 		<!-- <div class="secondsidebar">
 				<h6 style="font-weight: bold; margin-bottom: 20px; margin-top: 20px; margin-left: 15px">Sort By:</h6>
 				<a id="FirstPerson1" onClick="listFirstPerson()"  href="#">First Person</a>
@@ -38,120 +51,92 @@
 				</div> -->
 <div class="container">
                 <!-- This is the heading showing how many movies are there -->
-                <h3 id="summary" style="margin-left: 200px; margin-top: 50px; margin-bottom: 30px; color: black; font-family: Verdana, Geneva, Tahoma, sans-serif;">Set up questions, answer on the phone!</h3>
             
             <!-- Displays thumbnails of the movies here -->
             <!-- <div id="moviesTable" class="row">
 
             </div> -->
-            <div style="margin: 0 auto; width: 100%;">
+            
               <div class="col-md-auto" style="margin-top: 100px; margin-left: 100px;">
                 <form id="signupForm" action="javascript:createQuestionsGoNext()">
-                  <h2 style="text-align: center; font-weight: bold;">Question no.</h2>
+                  <h2 id="questionno" style="text-align: center; font-weight: bold;">Question no. 1</h2>
+                  <div class="row">
+                    <table style="margin: 0 auto;">
+                      <tr>
+                      <td>
+                      <br>
+                        <textarea style="height: 100px; width: 950px; resize: none;" id="addquestion" name="addUsername" placeholder="Question" autocomplete="off" required></textarea>
+                        <br>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                        <br>
+                        <input style="width: 950px;" type="text" id="addanswer" placeholder="Correct Answer" required/>
+                          <br>
+                          </td>
+                        </tr>
+                      </table>
+                  </div>
                   <div class="row">
                     <div class="col">
-                <table style="margin: 0 auto;">
-                  
-                  <tr>
-                  <td>
-                  <label>Question: </label>
-                  <br>
-                    <input type="text" id="addquestion" name="addUsername" autocomplete="off" required/>
-                    <br>
-                    </td>
-                  </tr>
+                <table style="margin-right: 0 auto;">
                   <tr>
                     <td>
-                      <label>Option A: </label>
                       <br>
-                      <input type="text" id="adda" name="addPassword" autocomplete="off" required/>
+                      <input type="text" style="width: 350px; margin-left: 15px;" id="adda" name="addPassword" placeholder="Option A" autocomplete="off" required/>
                       <br>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <label>Option B: </label>
                       <br>
-                      <input type="text" id="addb" name="addEmail" autocomplete="off" required/>
+                      <input type="text" style="width: 350px; margin-left: 15px;" id="addb" placeholder="Option B" autocomplete="off" required/>
                       <br>
                     </td>
                   </tr>
                   </table>
                   </div>
                   <div class="col">
-                  <table style="margin: 0 auto;">
+                  <table style="margin-left: auto;">
                   
                     
                     <tr>
-                    <td>	
-                    <label>Option C: </label>
+                    <td>
                     <br>
-                      <input type="text" id="addc" name="cfmPassword" autocomplete="off" required/>
+                      <input type="text" style="width: 350px; margin-right: 15px;" id="addc" placeholder="Option C" autocomplete="off" required/>
                       <br>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <label>Option D: </label>
                         <br>
-                        <input type="text" id="addd" name="cfmEmail" autocomplete="off" required/>
-                        <br>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label>Correct Answer: </label>
-                        <br>
-                        <input type="text" id="addanswer" name="cfmEmail" autocomplete="off" required/>
+                        <input type="text" style="width: 350px; margin-right: 15px;" id="addd" placeholder="Option D" autocomplete="off" required/>
                         <br>
                       </td>
                     </tr>
+                    
                     </table>
                     </div>
                   </div>
-                    <input type="submit" value="Start Session">
-                    <input type="button" onClick="createQuestions()" value="Next Question">
+                  <div style="margin: 0 auto; text-align: center; margin-top: 50px;">
+                    <input type="submit" style="background-color: #8FBFE0; 
+                    font-family: Georgia, 'Times New Roman', Times, serif; 
+                    color: #fff; border-radius: 3px; 
+                    outline: 0; border: 2px solid #a0a0a0; 
+                    margin-top: 10px; margin-right: 50px; width: 150px; height: 45px;"
+                     value="Start Session">
+                     
+                    <input type="button" style="background-color: #8FBFE0; 
+                    font-family: Georgia, 'Times New Roman', Times, serif; 
+                    color: #fff; border-radius: 3px; 
+                    outline: 0; border: 2px solid #a0a0a0; 
+                    margin-top: 10px; width: 150px; height: 45px;" 
+                    onClick="createQuestions()" value="Next Question">
+                  </div>
                 </form>
               </div>
-            </div>
-
-
-            <!-- <div style="margin: 0 auto; margin-top: 100px; width: 120%;">
-              <div class="row">
-                <div class="col-md-auto">
-                    <div style="width: 630px; height: 250px; text-align: center; outline: 5px solid rgba(112,97,76,1); background-image: url('testdesigns/pls_bh.png'); background-size: 400px 300px; background-repeat: no-repeat; background-position: right top;">
-                      <h3 style="padding-top: 100px;">- Loved by You -</h3>
-                    </div>
-                </div>
-                <div class="col-1">
-                  
-                </div>
-                <div class="col-sm-auto">
-                  <a href="#" item="8" onclick="fetchImages(this)"><img src="testdesigns/Image_3.png" width="250px" height="250px"></a>
-                </div>
-              </div>
-            </div>
-
-
-            <div style="margin: 0 auto; margin-top: 100px; width: 120%;">
-              <div class="row">
-                <div class="col-sm-auto">
-                  <a href="#" item="6" onclick="fetchImages(this)"><img src="testdesigns/Mask_Group_4.png" width="250px" height="250px"></a>
-                </div>
-                <div class="col-1">
-                  
-                </div>
-                <div class="col-sm-auto">
-                  <a href="#" item="4" onclick="fetchImages(this)"><img src="testdesigns/Mask_Group_5.png" width="250px" height="250px"></a>
-                </div>
-                <div class="col-1">
-                  
-                </div>
-                <div class="col-sm-auto">
-                  <a href="#" item="9" onclick="fetchImages(this)"></a><img src="testdesigns/Image_4.png" width="250px" height="250px"></a>
-                </div>
-              </div>
-            </div> -->
+            
  </div>
 	
         <div w3-include-html="comments-modal-view.html"></div>
@@ -161,7 +146,7 @@
 	<div w3-include-html="criticreview-modal-view.html"></div>
 	
 <br><br>
-	</div>
+	
 </body>
 <!-- <footer>
 	<div w3-include-html="footer.html"></div>

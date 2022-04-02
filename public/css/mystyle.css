@@ -117,8 +117,9 @@ color: white;
 .container{
 	height: auto;
 	border-radius: 5px;
-	width: 500%;
-	color: #70614C;
+	width: 100%;
+	margin: 0 auto;
+	color: #C47E93;
 }
 .fugl{
 	font-family:Verdana;

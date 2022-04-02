@@ -104,10 +104,12 @@ function signUp(){
     var userId = db.collection("users").doc().id;
 
     var newuser = document.getElementById("addusername").value;
+    var newrealname = document.getElementById("addrealname").value;
     var newpass = document.getElementById("addpassword").value;
     var newemail = document.getElementById("addemail").value;
 
     db.collection("users").doc(userId).set({
+        realname: newrealname,
         username: newuser,
         password: newpass,
         email: newemail,
@@ -228,45 +230,64 @@ function getResponsesBySession(id){
 //add session to db and go to set-question-answers.html
 function createSession(){
 
-    var myId = db.collection("sessions").doc().id;
 
-    myId = myId.substring(0, 7);
-    
-    var uname = localStorage.getItem("userName");
+    var checkuserexist = localStorage.getItem("userName");
 
-    // var answer = document.getElementById("addanswer").value;
-    // var newa = document.getElementById("adda").value;
-    // var newb = document.getElementById("addb").value;
-    // var newc = document.getElementById("addc").value;
-    // var newd = document.getElementById("addd").value;
+    console.log(checkuserexist);
+    if (checkuserexist == null){
+        alert("You need to log in / sign up to create a room first");
+        window.location.href="auth.html";
+        return;
+    }
+    else{
 
-    db.collection("sessions").doc(myId).set({
-        sessionid: myId,
-        username: uname,
-    })
-    .then(function(docRef) {
-        console.log("Session created!");
+        var myId = db.collection("sessions").doc().id;
 
-        //add sessionid to localstorage
-        localStorage.setItem("sessionID", sessionid);
+        myId = myId.substring(0, 7);
+        
+        var uname = localStorage.getItem("userName");
 
-        //todo: bring user to create questions
-        window.location.href = "set-question-answers.html";
+        // var answer = document.getElementById("addanswer").value;
+        // var newa = document.getElementById("adda").value;
+        // var newb = document.getElementById("addb").value;
+        // var newc = document.getElementById("addc").value;
+        // var newd = document.getElementById("addd").value;
 
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
+        db.collection("sessions").doc(myId).set({
+            sessionid: myId,
+            username: uname,
+        })
+        .then(function(docRef) {
+            console.log("Session created!");
+
+            //add sessionid to localstorage
+            localStorage.setItem("sessionID", myId);
+
+            //todo: bring user to create questions
+            window.location.href = "set-question-answers.html";
+
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
 }
 
 //used in set-question-answers.html for setting questions
+var questionNo = 1;
+function questNo(){
+    var questionnumb = document.getElementById("questionno");
+    questionnumb.innerHTML = "";
+    questionnumb.innerHTML = "Question No. " + questionNo;
+}
 function createQuestions(){
     
     var sessionid = localStorage.getItem("sessionID"); //get session id from sessionstorage
 
     var myId = db.collection("questions").doc().id;
     
-    var questionNo = 1;
+
+
     var question = document.getElementById("addquestion").value;
     var answer = document.getElementById("addanswer").value;
     var newa = document.getElementById("adda").value;
@@ -274,28 +295,38 @@ function createQuestions(){
     var newc = document.getElementById("addc").value;
     var newd = document.getElementById("addd").value;
 
-    db.collection("questions").doc(myId).set({
-        question: question,
-        sessionid: sessionid,
-        questionno: questionNo.toString(),
-        questionid: myId,
-        answer: answer,
-        a: newa,
-        b: newb,
-        c: newc,
-        d: newd,
-    })
-    .then(function(docRef) {
-        console.log("Question inserted!");
-
-        //todo: redirect user back to control page
-        // questionNo++;
-        location.reload()
-
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
+    if (answer == newa || answer == newb || answer == newc || answer == newd){
+        db.collection("questions").doc(myId).set({
+            question: question,
+            sessionid: sessionid,
+            questionno: questionNo.toString(),
+            answer: answer,
+            a: newa,
+            b: newb,
+            c: newc,
+            d: newd,
+        })
+        .then(function(docRef) {
+            console.log("Question inserted!");
+    
+            //todo: redirect user back to control page
+            questionNo++;
+            document.getElementById("addquestion").value = '';
+            document.getElementById("addanswer").value = '';
+            document.getElementById("adda").value = '';
+            document.getElementById("addb").value = '';
+            document.getElementById("addc").value = '';
+            document.getElementById("addd").value = '';
+            questNo(questionNo);
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
+    else{
+        alert("Please enter an answer that matches one of the options!")
+    }
 }
 
 //once user has created enough questions and clicked "finish", trigger this
@@ -305,7 +336,6 @@ function createQuestionsGoNext(){
 
     var myId = db.collection("questions").doc().id;
     
-    var questionNo = 1;
     var question = document.getElementById("addquestion").value;
     var answer = document.getElementById("addanswer").value;
     var newa = document.getElementById("adda").value;
@@ -313,38 +343,44 @@ function createQuestionsGoNext(){
     var newc = document.getElementById("addc").value;
     var newd = document.getElementById("addd").value;
 
-    db.collection("questions").doc(myId).set({
-        question: question,
-        sessionid: sessionid,
-        questionno: questionNo.toString(),
-        questionid: myId,
-        answer: answer,
-        a: newa,
-        b: newb,
-        c: newc,
-        d: newd,
-    })
-    .then(function(docRef) {
-        console.log("Question inserted!");
-
-        console.log(sessionid);
-
-        //todo: redirect user back to control page
-        var nextpage = confirm("Proceed to start quiz?");
-        if (nextpage == true){
-            localStorage.setItem("sessionIDTemp", sessionid);
-
-            window.location.href = "display-room.html";
-        
-        }
-        else{
-            location.reload();
-        }
-
-    })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
-    });
+    if (answer == newa || answer == newb || answer == newc || answer == newd){
+        db.collection("questions").doc(myId).set({
+            question: question,
+            sessionid: sessionid,
+            questionno: questionNo.toString(),
+            questionid: myId,
+            answer: answer,
+            a: newa,
+            b: newb,
+            c: newc,
+            d: newd,
+        })
+        .then(function(docRef) {
+            console.log("Question inserted!");
+    
+            console.log(sessionid);
+    
+            //todo: redirect user back to control page
+            var nextpage = confirm("Proceed to start quiz?");
+            if (nextpage == true){
+                localStorage.setItem("sessionIDTemp", sessionid);
+    
+                questionNo = 1; 
+                window.location.href = "display-room.html";
+            
+            }
+            else{
+                location.reload();
+            }
+    
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
+    else{
+        alert("Please enter an answer that matches one of the options!")
+    }
 }
 
 //displaying session id on the display-room page (before quiz starts)
@@ -353,26 +389,75 @@ function getSessionID(){
     var sessionid = localStorage.getItem("sessionIDTemp");
 
     var el_down = document.getElementById("sessionid");
-    el_down.innerHTML = "Session ID = " + sessionid;
+    el_down.value = sessionid;
+}
+
+
+//joining session
+function joinRoom(){
+    var checkuserexist = localStorage.getItem("userName");
+
+    localStorage.removeItem("sessionIDTemp");
+
+    console.log(checkuserexist);
+    if (checkuserexist == null){
+        alert("You need to log in / sign up to join a session first");
+        window.location.href="auth.html";
+        return;
+    }
+    else{
+
+        var sessionid = document.getElementById("joinRoomInput").value;
+
+        var session_array = [];
+
+        db.collection("sessions")
+        .get()
+        .then(snapshot => {
+        //let changes = snapshot.docChanges();
+        const documents = snapshot.docs //array of documents
+        
+        documents.forEach((doc) => {
+            const docData = doc.data() //Data of that single document
+            console.log(session_array);
+            session_array.push(docData["sessionid"]);
+
+            for (var i = 0; i < session_array.length; i++){
+                if (sessionid == session_array[i]){
+
+                    localStorage.setItem("sessionIDTemp", sessionid);
+                    window.location.href = "question-answers.html";
+                    return;
+                }
+                else if (i ==session_array.length-1 && sessionid != session_array[i]){
+                    alert("Invalid Room Code!");
+                }
+            }
+        })
+        });
+
+    }
 }
 
 
 
-var count = 0;
-//display questions
+//display questions and correct ans
+var count = 0; //global variable for question count
 function displayQuestions(){
+
+    var ansfield = document.getElementById("correctans");
+    ansfield.innerHTML = " ";
 
     var dispqns = [];
 
-    //var session_id = localStorage.getItem("sessionIDTemp");
-    var session_id = "EoV11mmUgFR9VpXBHxwH";
+    var session_id = localStorage.getItem("sessionIDTemp");
+    //var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
 
     db.collection("questions")
     .where("sessionid", "==", session_id)
     .get()
     .then(snapshot => {
-        //let changes = snapshot.docChanges();
-        //console.log(snapshot.data())
+        
         const documents = snapshot.docs //array of documents
         documents.forEach((doc) => {
             const docData = doc.data() //Data of that single document
@@ -383,35 +468,47 @@ function displayQuestions(){
         
         console.log(dispqns);
 
-        //todo: set interval and increment 'count'
-
         var question = document.getElementById("question");
         var choiceA = document.getElementById("choiceA");
         var choiceB = document.getElementById("choiceB");
         var choiceC = document.getElementById("choiceC");
         var choiceD = document.getElementById("choiceD");
 
-        question.innerHTML = "Question: " + dispqns[count].question;
-        choiceA.innerHTML = "Option A: " + dispqns[count].a;
-        choiceB.innerHTML = "Option B: " + dispqns[count].b;
-        choiceC.innerHTML = "Option C: " + dispqns[count].c;
-        choiceD.innerHTML = "Option D: " + dispqns[count].d;
+        question.innerHTML = dispqns[count].question;
+        choiceA.innerHTML = dispqns[count].a;
+        choiceB.innerHTML = dispqns[count].b;
+        choiceC.innerHTML = dispqns[count].c;
+        choiceD.innerHTML = dispqns[count].d;
 
+        //begin interval for displaying question (10 secs of displaying)
         timeout = setTimeout(alertFunc, 10000);
 
         function alertFunc() {
             var correctans = dispqns[count].answer;
             count++;
 
-            console.log(correctans);
+            
             if (count < dispqns.length){
                 
-                //todo: display answers for 15 secs here, currently is set to display next qn for debugging
-                displayQuestions();
+                //display answers for 15 secs before moving on to next qn
+                timeout = setTimeout(recallFunc, 15000);
+
+                var ansfield = document.getElementById("correctans");
+                ansfield.innerHTML = "Correct Answer: " + correctans;
+                
+                function recallFunc(){
+                    displayQuestions();
+                }
             }
-            else{
+            else{ //once quiz has ended
                 var question = document.getElementById("question");
                 question.innerHTML = "End of Quiz!";
+
+                var ansfield = document.getElementById("correctans");
+                ansfield.innerHTML = "Correct Answer: " + correctans;
+
+                //todo: redirect page to leaderboards.html aft countdown ends
+
                 return;
             }
 
@@ -419,6 +516,80 @@ function displayQuestions(){
 
     });
 }
+
+
+
+
+//display leaderboard function (called by leaderboards.html body onload), TEST WITH ANOTHER USER (NEED USE ANDROID STUDIO)
+function displayLeaderboard(){
+
+    var students_array = [];
+    var responses_array = [];
+
+    var pointcount;
+    
+    //var session_id = localStorage.getItem("sessionIDTemp");
+    var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
+
+    var leaderboard = document.getElementById("results");
+    leaderboard.innerHTML = "";
+
+
+    db.collection("responses")
+    .where("sessionid", "==", session_id)
+    .get()
+    .then(snapshot => {
+        
+        const documents = snapshot.docs //array of documents
+        documents.forEach((doc) => {
+            const docData = doc.data() //Data of that single document
+            console.log("question call success!")
+            students_array.push(docData["username"]);
+            responses_array.push(docData);
+           
+        })
+        
+        console.log(students_array);
+        uniq = [...new Set(students_array)]; //cleanse duplicate usernames from array
+
+        console.log(uniq);
+        console.log(responses_array);
+
+        for (i = 0; i < uniq.length; i++) {
+            console.log("now at: " + uniq[i]);
+
+            pointcount = 0;
+
+            for (x = 0; x < responses_array.length; x++) {
+
+                if (uniq[i] == responses_array[x].username && responses_array[x].correctWrong == 1) {
+
+                    console.log("mathc");
+
+                    pointcount++;
+                }
+                // else if (x == responses_array.length-1 && (uniq[i] != responses_array[x].username || responses_array[x].correctWrong != 1)) {
+                //     //display student name and score on webpage
+                //     //innerHtml = uniq[i].name + "   " + pointcount; 
+                //     leaderboard.innerHTML = uniq[i] + ", score:" + pointcount;
+                //     // console.log(uniq[i] + ", score:" + pointcount); 
+                // }
+                // else if (x == responses_array.length-1){
+                //     pointcount++;
+                //     //display student name and score on webpage
+                //     leaderboard.innerHTML = uniq[i] + ", score:" + pointcount;
+                // }
+            }
+            var html = "<p>student name: " + uniq[i] + ", score: " + pointcount + "</p>";
+            leaderboard.insertAdjacentHTML('beforeend', html);
+        }
+
+    });
+}
+
+
+
+
 
 
 
