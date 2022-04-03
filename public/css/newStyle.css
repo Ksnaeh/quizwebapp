@@ -1,0 +1,62 @@
+#img1{
+    text-align: center;
+    margin: 0 auto;
+    
+}
+.img2{
+    text-align: center;
+    margin: 0 auto;
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    
+}
+#firstplace{
+    margin-top: -70px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.503);
+    text-align: center;
+    
+}
+#secondplace{
+    margin-top: -70px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.503);
+    text-align: center;
+    width: 100%;
+    margin-left: 0 auto;
+    margin-right: 0 auto;
+}
+
+
+#row2ndplace{
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+}
+#row1stplace{
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+}
+#row3rdplace{
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+}
+
+
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }

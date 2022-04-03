@@ -104,6 +104,16 @@ function logOut(){
     window.location.href = "index.html";
 }
 
+function checkLoggedIn(){
+    var t = localStorage.getItem("userName");
+    if (t == null){
+        document.getElementById("hidebtn").style.display="none";
+    }
+    else{
+        document.getElementById("hidebtn").style.display="block";
+    }
+}
+
 function signUp(){
 
     var userId = db.collection("users").doc().id;
@@ -283,7 +293,7 @@ var questionNo = 1;
 function questNo(){
     var questionnumb = document.getElementById("questionno");
     questionnumb.innerHTML = "";
-    questionnumb.innerHTML = "Question No. " + questionNo;
+    questionnumb.innerHTML = "Add Question";
 }
 function createQuestions(){
     
@@ -300,7 +310,10 @@ function createQuestions(){
     var newc = document.getElementById("addc").value;
     var newd = document.getElementById("addd").value;
 
-    if (answer == newa || answer == newb || answer == newc || answer == newd){
+    if (questionNo == 3){
+        alert("You have reached the maximum limit of questions for this room!");
+    }
+    else if ((answer == newa || answer == newb || answer == newc || answer == newd) && questionNo < 3){
         db.collection("questions").doc(myId).set({
             question: question,
             sessionid: sessionid,
@@ -322,7 +335,7 @@ function createQuestions(){
             document.getElementById("addb").value = '';
             document.getElementById("addc").value = '';
             document.getElementById("addd").value = '';
-            questNo(questionNo);
+            questNo();
     
         })
         .catch(function(error) {
@@ -330,7 +343,7 @@ function createQuestions(){
         });
     }
     else{
-        alert("Please enter an answer that matches one of the options!")
+        alert("Please enter an answer that matches one of the options!");
     }
 }
 
@@ -435,7 +448,7 @@ function joinRoom(){
                     return;
                 }
                 else if (i ==session_array.length-1 && sessionid != session_array[i]){
-                    alert("Invalid Room Code!");
+                    return alert("Invalid Room Code!");
                 }
             }
         })
@@ -494,7 +507,7 @@ function displayQuestions(){
         choiceD.innerHTML = dispqns[count].d;
 
         //begin interval for displaying question (10 secs of displaying)
-        timeout = setTimeout(alertFunc, 10000);
+        timeout = setTimeout(alertFunc, 3000);
 
         function alertFunc() {
             var correctans = dispqns[count].answer;
@@ -509,7 +522,7 @@ function displayQuestions(){
                 
 
                 //display answers for 15 secs before moving on to next qn
-                timeout = setTimeout(recallFunc, 15000);
+                timeout = setTimeout(recallFunc, 2000);
 
                 var ansfield = document.getElementById("correctans");
                 ansfield.innerHTML = correctans;
@@ -549,14 +562,35 @@ function displayLeaderboard(){
 
     var students_array = [];
     var responses_array = [];
+    const scores_array = new Map();
 
     var pointcount;
     
     var session_id = localStorage.getItem("sessionIDTemp");
     //var session_id = "EoV11mmUgFR9VpXBHxwH"; //for debugging
 
-    var leaderboard = document.getElementById("results");
-    leaderboard.innerHTML = "";
+    
+    // var leaderboard = document.getElementById("results");
+    // leaderboard.innerHTML = "";
+
+    document.getElementById("viewScoreBoardModal").style.display = "none";
+
+
+
+    var row_1st = document.getElementById("row1stplace");
+    row_1st.style.display = "none";
+    var firstperson = document.getElementById("firstperson");
+    firstperson.innerHTML = "";
+
+    var row_2nd = document.getElementById("row2ndplace");
+    row_2nd.style.display = "none";
+    var secondperson = document.getElementById("2ndperson");
+    secondperson.innerHTML = "";
+
+    var row_3rd = document.getElementById("row3rdplace");
+    row_3rd.style.display = "none";
+    var thirdperson = document.getElementById("3rdperson");
+    thirdperson.innerHTML = "";
 
 
     db.collection("responses")
@@ -576,8 +610,10 @@ function displayLeaderboard(){
         console.log(students_array);
         uniq = [...new Set(students_array)]; //cleanse duplicate usernames from array
 
-        console.log(uniq);
+
+
         console.log(responses_array);
+        
 
         for (i = 0; i < uniq.length; i++) {
             console.log("now at: " + uniq[i]);
@@ -604,13 +640,134 @@ function displayLeaderboard(){
                 //     leaderboard.innerHTML = uniq[i] + ", score:" + pointcount;
                 // }
             }
-            var html = "<p>student name: " + uniq[i] + ", score: " + pointcount + "</p>";
+            scores_array.set(uniq[i], pointcount);
+            // console.log(uniq);
+            // console.log(scores_array);
+            // var html = "<p>student name: " + uniq[i] + ", score: " + pointcount + "</p>";
+            // leaderboard.insertAdjacentHTML('beforeend', html);
+        }
+
+        const mapSort1 = new Map([...scores_array.entries()].sort((a, b) => b[1] - a[1]));
+        console.log(mapSort1);
+        console.log(mapSort1.keys());
+        
+
+        timeout = setTimeout(dispThird, 3000);
+
+            function dispThird() {
+                // var row_3rd = document.getElementById("row1stplace");
+                row_3rd.style.display = "block";
+
+
+                thirdperson.innerHTML = Array.from(mapSort1.keys())[2];
+            }
+        
+
+        timeout2 = setTimeout(dispSecond, 5000);
+            
+        function dispSecond() {
+            // var row_2nd = document.getElementById("row1stplace");
+            row_2nd.style.display = "block";
+
+
+            secondperson.innerHTML = Array.from(mapSort1.keys())[1];
+        }
+
+        timeout3 = setTimeout(dispFirst, 7000);
+
+        function dispFirst() {
+            var row_1st = document.getElementById("row1stplace");
+            row_1st.style.display = "block";
+
+            firstperson.innerHTML = Array.from(mapSort1.keys())[0];
+        }
+
+        timeout4 = setTimeout(dispScores, 10000);
+
+        function dispScores() {
+            document.getElementById("viewScoreBoardModal").style.display = "block";
+        }
+
+
+        });
+}
+
+//for displaying in modal
+function displayScores(){
+
+    var students_array = [];
+    var responses_array = [];
+
+    const scores_array = new Map();
+
+    var pointcount;
+    
+    var session_id = localStorage.getItem("sessionIDTemp");
+
+    var leaderboard = document.getElementById("results");
+    leaderboard.innerHTML = "";
+
+    db.collection("responses")
+    .where("sessionid", "==", session_id)
+    .get()
+    .then(snapshot => {
+        
+        const documents = snapshot.docs //array of documents
+        documents.forEach((doc) => {
+            const docData = doc.data() //Data of that single document
+            console.log("question call success!")
+            students_array.push(docData["username"]);
+            responses_array.push(docData);
+           
+        })
+        
+        console.log(students_array);
+        uniq = [...new Set(students_array)]; //cleanse duplicate usernames from array
+        
+
+        for (i = 0; i < uniq.length; i++) {
+            console.log("now at: " + uniq[i]);
+
+            pointcount = 0;
+
+            for (x = 0; x < responses_array.length; x++) {
+
+                if (uniq[i] == responses_array[x].username && responses_array[x].correctWrong == 1) {
+
+                    console.log("mathc");
+
+                    pointcount++;
+                }
+                // else if (x == responses_array.length-1 && (uniq[i] != responses_array[x].username || responses_array[x].correctWrong != 1)) {
+                //     //display student name and score on webpage
+                //     //innerHtml = uniq[i].name + "   " + pointcount; 
+                //     leaderboard.innerHTML = uniq[i] + ", score:" + pointcount;
+                //     // console.log(uniq[i] + ", score:" + pointcount); 
+                // }
+                // else if (x == responses_array.length-1){
+                //     pointcount++;
+                //     //display student name and score on webpage
+                //     leaderboard.innerHTML = uniq[i] + ", score:" + pointcount;
+                // }
+            }
+            scores_array.set(uniq[i], pointcount);
+        }
+
+
+        //sorting mapped array
+        const mapSort = new Map([...scores_array.entries()].sort((a, b) => b[1] - a[1]));
+
+        for (i = 0; i < mapSort.size; i++) {
+
+            var key = Array.from(mapSort.keys())[i];
+
+            var html = "<p>student name: " + key + ", score: " + mapSort.get(key) + "</p><br>";
             leaderboard.insertAdjacentHTML('beforeend', html);
         }
 
+
     });
 }
-
 
 
 
@@ -676,16 +833,21 @@ function removeQuestion(){
 //END SESSION (BUTTON TO BE FOUND IN LEADERBOARD)
 function endSession(){
 
-    var sessionid = localStorage.getItem("sessionIDTemp"); //to get sessionid when user clicks 'end session'
-    db.collection("sessions").doc(sessionid).delete().then(() => {
-        console.log("Document successfully deleted!");
 
+    var s = confirm("Are you sure you want to close session?")
 
-    }).catch((error) => {
-        console.error("Error removing document: ", error);
-    });
+    if (s == true){
+        var sessionid = localStorage.getItem("sessionIDTemp"); //to get sessionid when user clicks 'end session'
+        db.collection("sessions").doc(sessionid).delete().then(() => {
+            console.log("Document successfully deleted!");
 
-    deleteAllQuestions(sessionid);
+            deleteAllQuestions(sessionid);
+
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+
+    }
 
 }
 
@@ -717,11 +879,10 @@ function deleteResponses(sessionid){
         snapshot.docs.forEach(doc => {
         batch.delete(doc.ref);
         });
-        return batch.commit();
-    })
+        batch.commit();
 
-    
-    localStorage.removeItem("sessionIDTemp"); //remove the locally stored session id once and for all
-    localStorage.removeItem("userName"); //logout user
-    window.location.href = "index.html";
+        localStorage.removeItem("sessionIDTemp"); //remove the locally stored session id once and for all
+        localStorage.removeItem("userName"); //logout user
+        return window.location.href = "index.html";
+    })
 }

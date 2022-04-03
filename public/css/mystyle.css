@@ -234,63 +234,8 @@ tr, td{
 	border-style: solid;
 }*/
 /*Game modal*/
-.cock{	
-	font-family:Verdana;
-	font-size: 16px;
-	font-weight: bold;
-	color: #000000;
-    width: 150px;
-    text-align: right;
-}
-.cock1{	
-	font-family:Verdana;
-	font-size: 16px;
-	text-align: right;
-	color: #000000;
-    width: 150px;
-}
 
-/*first game modal table*/
-.hedmark{
-    font-family:Verdana;
-	font-size: 26px;
-	font-weight: bold;
-	text-align: left;
-	color: #000000;
-    margin-bottom: 20px;
-}
-.firstie, #genre, #moviePoster{
-    font-size: 14px;
-    color:#444444;
-}
-
-.firstie1{
-    font-size: 12px;
-    color:#444444;
-}
-.akerhus1{
-    font-family:Verdana;
-	font-size: 14px;
-	text-align: left;
-    width: 50%;
-
-}
-.akerhus{
-    font-family:Verdana;
-	font-size: 16px;
-	text-align: left;
-    width: 130px;
-
-}
-.akerhus2{
-    font-family:Verdana;
-    font-size: 14px;
-	text-align: left;
-    width: 35%;
-
-}
-
-@media all and (max-width: 800px) {
+/* @media all and (max-width: 800px) {
     .sidebar, .sidebar1, .secondsidebar, .secondsidebar2{
         width: 30%;
     }
@@ -300,4 +245,4 @@ tr, td{
     .flex, .signupForm{
         width:20%;
     }
-}
+} */

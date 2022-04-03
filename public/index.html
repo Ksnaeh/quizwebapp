@@ -8,14 +8,14 @@
   body{
      /* The image used */
       background-image: url("css/bakgrunn.png");
-      background-color: #fff;
+      background-color: #E3655B;
       /* Set a specific height */
 
       /* Create the parallax scrolling effect */
       background-attachment: fixed;
       background-position: center;
       background-repeat: no-repeat;
-      background-size:1750px 850px;
+      background-size:1750px 840px;
   }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -38,9 +38,11 @@
 
 </head>
 
-<body>
-            
-                <!-- This is the heading showing how many movies are there -->
+<body onload="checkLoggedIn()">
+           
+                <div id="hidebtn" style="display: block; width: 100%; margin-top: 5px; text-align:end; padding-right: 70px;">
+                  <button class="btn btn-info" style="width: 5%;" onclick="logOut()">Logout</button>
+                </div>
                 <div style="display: block; width: 100%; margin-top: 50px; text-align: center;">
                   <img src="css/Icon1.png" width="30%" height="30%">
                 </div>
@@ -66,15 +68,8 @@
             </div>
 
 
-            
-	
-        <div w3-include-html="comments-modal-view.html"></div>
-        
-        <div w3-include-html="movie-modal.html"></div>
-	<div w3-include-html="message-modal.html"></div>
-	<div w3-include-html="criticreview-modal-view.html"></div>
-	
-<br><br>
+
+
 </body>
 <!-- <footer>
 	<div w3-include-html="footer.html"></div>

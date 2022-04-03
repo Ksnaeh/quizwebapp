@@ -3,7 +3,32 @@
 <head>
 <meta charset="utf-8">
 <title>Quiz Web App</title>
+<style type="text/css">
+  .background{
+     /* The image used */
+      background-image: url("css/leaderboardbakgrunn.png");
+      /* Set a specific height */
+
+      /* Create the parallax scrolling effect */
+      background-attachment: fixed;
+      background-position: top center;
+      background-repeat:repeat-x;
+      background-size: contain;
+      height: 100vh;
+      width: 100%;
+      
+  }
+
+  #leadboardh3{
+      margin: 0 auto;
+      color: #3D518C;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 64px;
+
+  }
+</style>
 <link rel="stylesheet" href="css/mystyle.css">
+<link rel="stylesheet" href="css/newStyle.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,57 +41,65 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	
 <script type="text/javascript" src="scripts/app.js"></script>
-<!-- <script src="js/auth.js"></script>
-<script src="js/images.js"></script>
-<script src="js/comments-viewonly.js"></script>
-<script src="js/app.js"></script>
-<script src="js/movies.js"></script> -->
+
 
 </head>
 
 <body onload="displayLeaderboard()">
-<!-- <body onload='editQuestions()'> -->
-	<div class="parallax">
-	        <!-- This is the container that holds the initial message, heading, and movies -->
-	<div id="heado" w3-include-html="top-navigation.html"></div>
-		<!-- <div class="secondsidebar">
-				<h6 style="font-weight: bold; margin-bottom: 20px; margin-top: 20px; margin-left: 15px">Sort By:</h6>
-				<a id="FirstPerson1" onClick="listFirstPerson()"  href="#">First Person</a>
-				  <a id="ThirdPerson1" onClick="listThirdPerson()" href="#">Third Person</a>
-				  <a id="MOBA1" onClick="listMOBA()" href="#">MOBA</a>
-				  <a id="BattleRoyale1" onClick="listBattleRoyale()" href="#">Battle Royale</a>
-				</div> -->
-<div class="container">
-
+  <div class="background">
+        <div style="text-align: end; padding-top: 5px; padding-right: 50px;">
+          <button id="endsessh" class="btn btn-danger" onclick="javascript:endSession()">End Room</button>
+          <button class="btn btn-info" onclick="javascript:logOut()">Logout</button>
+      </div>  
+<div class="container">  
             
-                <!-- This is the heading showing how many movies are there -->
-                <h3 id="summary" style="margin-left: 200px; margin-top: 50px; margin-bottom: 30px; color: black; font-family: Verdana, Geneva, Tahoma, sans-serif;">Set up questions, answer on the phone!</h3>
             
-            <!-- Displays thumbnails of the movies here -->
-            <!-- <div id="moviesTable" class="row">
 
-            </div> -->
-            <div style="margin: 0 auto; width: 100%;">
-              <div class="col-md-auto" style="margin-top: 100px; margin-left: 100px;">
-                <h3>Scoreboard:</h3>
-                <div id="results"></div>
-                
-                <button class="btn btn-primary" onclick="endSession()">End Room</button>
-                <button class="btn btn-primary" onclick="logOut()">Logout</button>
-              </div>
             </div>
-
+            <div style="padding-top: 30px; width: 100%; text-align: center;">
+              <h1 id="leadboardh3"><b>Leaderboard</b></h1>
+                <div class="row">
+                  <div id="row1stplace" style="margin: 0 auto; text-align: center;">
+                    <div id="img1">
+                      <img src="css/1stplace.png" width="250" height="250">
+                      <div id="firstplace" style="position: relative;;">
+                        <h4 id="firstperson">Name</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col" id="row2ndplace">
+                    <div class="row">
+                      <div class="img2">
+                        <img src="css/2ndplace.png" width="250" height="250">
+                        <div id="secondplace" style="position: relative;">
+                          <h4 id="2ndperson">Name</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col" style="margin: 0 auto;" id="row3rdplace">
+                    <div class="row">
+                      <div class="img2">
+                        <img src="css/3rdplace.png" width="250" height="250">
+                        <div id="secondplace" style="position: relative;">
+                          <h4 id="3rdperson">Name</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div id="results"></div> -->
+                
+                <button class="btn btn-primary" href="#" data-toggle="modal" data-target="#commentModal" id="viewScoreBoardModal" style="margin: 0 auto;" onclick="displayScores()">View Scoreboard</button>
+            </div>
 
             
  </div>
 	
         <div w3-include-html="comments-modal-view.html"></div>
         
-        <div w3-include-html="movie-modal.html"></div>
-	<div w3-include-html="message-modal.html"></div>
-	<div w3-include-html="criticreview-modal-view.html"></div>
-	
-<br><br>
 	</div>
 </body>
 <!-- <footer>
